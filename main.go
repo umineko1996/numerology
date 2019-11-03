@@ -110,7 +110,7 @@ func getArgs() (year, month, day int, err error) {
 	return year, month, day, nil
 }
 
-func getToday() (year, month, day int) {
+func getDate() (year, month, day int) {
 	t := time.Now()
 	y, m, d := t.Date()
 	return y, int(m), d
