@@ -25,7 +25,7 @@ func run() int {
 		return failed
 	}
 
-	toyear, tomonth, today := getToday()
+	toyear, tomonth, today := getDate()
 
 	// 誕生日前後判定
 	if bmonth >= tomonth {
@@ -65,8 +65,8 @@ func run() int {
 	return success
 }
 
-func sum(num ...int) int {
-	if n := num[0]; len(num) == 1 {
+func sum(nums ...int) int {
+	if n := nums[0]; len(nums) == 1 {
 		switch n {
 		case 11, 22, 33:
 			return n
@@ -76,34 +76,33 @@ func sum(num ...int) int {
 		}
 	}
 
-	ret := 0
-	for _, n := range num {
-		ret += n/1000 + (n%1000)/100 + (n%100)/10 + n%10
+	result := 0
+	for _, n := range nums {
+		result += n/1000 + (n%1000)/100 + (n%100)/10 + n%10
 	}
 
-	return sum(ret)
+	return sum(result)
 }
+
+var errValidation = errors.New("usage: numerology.exe YYYY/MM/DD")
 
 func getArgs() (year, month, day int, err error) {
 	args := os.Args
 	if len(args) != 2 {
-		return 0, 0, 0, errors.New("usage: numerology.exe YYYY/MM/DD")
+		return 0, 0, 0, errValidation
 	}
 	num := strings.Split(args[1], "/")
 	if len(num) != 3 {
-		return 0, 0, 0, errors.New("usage: numerology.exe YYYY/MM/DD")
+		return 0, 0, 0, errValidation
 	}
 
-	year, err = strconv.Atoi(num[0])
-	if err != nil {
+	if year, err = strconv.Atoi(num[0]); err != nil {
 		return 0, 0, 0, err
 	}
-	month, err = strconv.Atoi(num[1])
-	if err != nil {
+	if month, err = strconv.Atoi(num[1]); err != nil {
 		return 0, 0, 0, err
 	}
-	day, err = strconv.Atoi(num[2])
-	if err != nil {
+	if day, err = strconv.Atoi(num[2]); err != nil {
 		return 0, 0, 0, err
 	}
 
