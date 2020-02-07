@@ -35,14 +35,14 @@ func run() int {
 	}
 
 	// 数秘術計算
-	congenitalNumber := sum(bday)
-	acquiredNumber := sum(byear, bmonth, bday)
-	respectNumber := sum(bmonth, bday)
+	congenitalNumber := Sum(bday)
+	acquiredNumber := Sum(byear, bmonth, bday)
+	respectNumber := Sum(bmonth, bday)
 
 	// 運勢計算
-	yf := sum(toyear, respectNumber)
-	mf := sum(tomonth, yf)
-	df := sum(today, mf)
+	yf := Sum(toyear, respectNumber)
+	mf := Sum(tomonth, yf)
+	df := Sum(today, mf)
 
 	// 出力
 	fmt.Println("先天数：　先天的にある数＿能力・資質＆恋愛中")
@@ -63,6 +63,23 @@ func run() int {
 	fmt.Printf("%d-%d-%d-%d-%d-%d\n", congenitalNumber, acquiredNumber, respectNumber, yf, mf, df)
 
 	return success
+}
+
+func Sum(nums ...int) int {
+	ret := sum(nums...)
+	switch ret {
+	case 2, 4, 6:
+	default:
+		return ret
+	}
+
+	// 2, 4, 6 のとき別の方法で再計算
+	ret = 0
+	for _, n := range nums {
+		ret += sum(n)
+	}
+
+	return sum(ret)
 }
 
 func sum(nums ...int) int {
